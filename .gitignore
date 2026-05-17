@@ -1,0 +1,15 @@
+# Ignore local Terraform directories
+.terraform/
+*.terraform*
+
+# Ignore sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Ignore local state files
+*.tfstate
+*.tfstate.backup
+
+# Ignore sensitive AWS credentials or env backups
+.env
+.aws/
