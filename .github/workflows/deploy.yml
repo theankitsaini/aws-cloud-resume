@@ -28,8 +28,10 @@ jobs:
 
     # Deploy static files to S3 bucket
     - name: Deploy to S3
+          - name: Sync Frontend to S3
       run: |
-        aws s3 sync frontend/ s3://${{ env.BUCKET_NAME }} --delete --exclude "*.tf" --exclude ".git*"
+        aws s3 sync frontend/ s3://aws-cloud-resume-2026 --delete --exclude "*.tf" --exclude ".git*"
+
 
 
         # Note: If you have a build step, change '.' to your output directory like './dist' or './build'
