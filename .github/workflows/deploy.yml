@@ -1,0 +1,33 @@
+name: Deploy Resume to AWS S3
+
+on:
+  push:
+    branches:
+      - main # change to master if needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Optional: If your resume uses a build framework like React/Vue/Vite, uncomment the lines below:
+    # - name: Install Dependencies & Build
+    #   run: |
+    #     npm install
+    #     npm run build
+
+    # Configure AWS Credentials
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1 # Change to your actual S3 bucket region
+
+    # Deploy static files to S3 bucket
+    - name: Deploy to S3
+      run: |
+        aws s3 sync . s3://YOUR-BUCKET-NAME --delete --exclude ".git/*" --exclude ".github/*"
+        # Note: If you have a build step, change '.' to your output directory like './dist' or './build'
